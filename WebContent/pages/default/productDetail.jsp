@@ -57,7 +57,7 @@ String baseUrl = context + "/default/product-detail";
 										<c:forEach var="o" items="${options}">
 											<div class="product_info-size-item">
 												<input type="radio" id="${o.getSize().getSizeId()}"
-													value="${o.getOptionId()}" /> <label
+													value="${o.getOptionId()}" name="radioButton" /> <label
 													for="${o.getSize().getSizeId()}">${o.getSize().getSizeName()}</label>
 											</div>
 										</c:forEach>

@@ -33,6 +33,7 @@ public class CartService extends SuperService {
   // [GET] CartServlet
   public void getOrderList() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       String url = "/pages/default/cart/index.jsp";
       @SuppressWarnings("unchecked")
       List<Order> orders = (List<Order>) request.getSession().getAttribute("orders");
@@ -55,6 +56,7 @@ public class CartService extends SuperService {
   // [POST] CartServlet
   public void deleteItemOrder() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       // Get sesion
       HttpSession session = super.getSession();
       // Get data
@@ -92,6 +94,7 @@ public class CartService extends SuperService {
   // [GET] CartCheckoutServlet
   public void getCheckoutOrdersForm() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       // forward url
       String url = "/pages/default/checkouts/index.jsp";
 
@@ -107,7 +110,7 @@ public class CartService extends SuperService {
   // [POST] CartCheckoutServlet
   public void submitCheckoutOrders() throws IOException {
     try {
-      System.out.println("Hello world");
+      super.setEncoding(Constants.UTF8);
       // Get data from session
       @SuppressWarnings("unchecked")
       List<Order> orders = (List<Order>) request.getSession().getAttribute("orders");

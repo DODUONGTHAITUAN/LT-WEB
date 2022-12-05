@@ -1,8 +1,10 @@
+<%@page import="com.shoplane.utils.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-request.setCharacterEncoding("utf-8");
+request.setCharacterEncoding(Constants.UTF8);
+response.setCharacterEncoding(Constants.UTF8);
 String context = request.getContextPath();
 String url = context + "/default/account";
 %>

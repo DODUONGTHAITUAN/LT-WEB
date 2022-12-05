@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.shoplane.services.ErrorService;
+
 @WebServlet(urlPatterns = { "/500", "/system/500" })
 public class InternalErrorServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
@@ -18,8 +20,8 @@ public class InternalErrorServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String pageInternalError = "/pages/500.jsp";
-    request.getRequestDispatcher(pageInternalError).forward(request, response);
+    ErrorService errorService = new ErrorService(request, response);
+    errorService.forwardPageError();
   }
 
   @Override

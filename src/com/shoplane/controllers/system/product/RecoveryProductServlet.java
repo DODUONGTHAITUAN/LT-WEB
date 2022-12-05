@@ -26,6 +26,8 @@ public class RecoveryProductServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    ProductService productService = new ProductService(request, response);
+    productService.recoveryAllProducts();
   }
 
 }

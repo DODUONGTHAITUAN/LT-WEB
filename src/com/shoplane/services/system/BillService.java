@@ -37,6 +37,7 @@ public class BillService extends SuperService {
   // [GET] ListBillServlet
   public void getListBill() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       // Set url patten active sidebar item
       super.getSession().setAttribute("urlPatten", Constants.BILLS);
       // Set encoding
@@ -167,6 +168,7 @@ public class BillService extends SuperService {
   // [GET] CreateBillServlet
   public void getBillForm() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       // define url to redirect
       String url = "/pages/system/bills/createBill.jsp";
 
@@ -190,6 +192,7 @@ public class BillService extends SuperService {
   // [POST] CreateBillServlet
   public void submitCreateBillForm() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       // define url to redirect
       String url = super.getContextPath() + "/system/bills/?status=2&current_page=1&page_size=10";
       // Get data

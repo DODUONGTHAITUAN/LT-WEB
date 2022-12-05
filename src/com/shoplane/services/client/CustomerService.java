@@ -109,6 +109,7 @@ public class CustomerService extends SuperService {
   // [GET] CustomerRegisterServlet
   public void getRegisterForm() throws ServletException, IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       String url = "/pages/default/account/registerAccount.jsp";
       String loginUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
           + request.getContextPath() + "/login";
@@ -122,9 +123,8 @@ public class CustomerService extends SuperService {
 
   // [POST] CustomerRegisterServlet
   public void postRegisterForm() throws IOException {
-
     try {
-
+      super.setEncoding(Constants.UTF8);
       // Link
       String url = super.getContextPath() + "/verify";
 
@@ -204,6 +204,7 @@ public class CustomerService extends SuperService {
   // [POST] CustomerVerifyCodeServlet
   public void postVerifyForm() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       String status = "";
       String url = super.getContextPath() + "/login";
       String loginUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()

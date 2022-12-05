@@ -33,7 +33,7 @@ String context = request.getContextPath();
 					<p>Internal Server Error !</p>
 				</header>
 				<p class="error-advise">Whoopps, something went wrong.</p>
-				<a class="btn btn-primary btn-round mb-5" href="<%=context%>/">GO
+				<a class="btn btn-primary btn-round mb-5" href="${homeUrl}">GO
 					TO HOME PAGE</a>
 				<footer class="page-copyright">
 					<p>© 2022. All RIGHT RESERVED.</p>

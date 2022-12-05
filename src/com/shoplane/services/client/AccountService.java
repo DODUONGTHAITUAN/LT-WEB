@@ -28,6 +28,7 @@ public class AccountService extends SuperService {
   // [GET] GetAccountServlet
   public void getAccount() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       String url = "/pages/default/account/index.jsp";
       // Get data
       User user = (User) request.getSession().getAttribute("user");
@@ -49,7 +50,7 @@ public class AccountService extends SuperService {
   // [GET] ChangePasswordAccountServlet
   public void getChangePasswordForm() throws IOException {
     try {
-      System.out.println("Hello world");
+      super.setEncoding(Constants.UTF8);
       // link
       String url = "/pages/default/account/changePasswordAccount.jsp";
       // Forwards
@@ -64,6 +65,7 @@ public class AccountService extends SuperService {
   // [POST] ChangePasswordAccountServlet
   public void submitChangePasswordForm() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       // link
       String url = super.getContextPath() + "/account";
       String changePasswordAccountStatus = "";
@@ -117,6 +119,7 @@ public class AccountService extends SuperService {
   // [GET] ModifyAccountServlet
   public void getModifyAccountForm() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       // link
       String url = "/pages/default/account/modifyAccount.jsp";
 
@@ -139,6 +142,7 @@ public class AccountService extends SuperService {
   // [POST] ModifyAccountServlet
   public void submitModifyAccountForm() throws IOException {
     try {
+      super.setEncoding(Constants.UTF8);
       // link
       String url = super.getContextPath() + "/account";
 

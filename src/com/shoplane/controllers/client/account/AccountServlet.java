@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.shoplane.services.client.AccountService;
+import com.shoplane.utils.Constants;
 
 @WebServlet(urlPatterns = { "/account", "/account/" })
 public class AccountServlet extends HttpServlet {
@@ -26,6 +27,8 @@ public class AccountServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    request.setCharacterEncoding(Constants.UTF8);
+    response.setCharacterEncoding(Constants.UTF8);
     doGet(request, response);
   }
 

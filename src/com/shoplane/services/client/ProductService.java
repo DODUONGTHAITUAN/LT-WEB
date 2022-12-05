@@ -2,6 +2,7 @@ package com.shoplane.services.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.shoplane.dao.CategoryDAO;
+import com.shoplane.dao.OptionDAO;
 import com.shoplane.dao.ProductDAO;
+import com.shoplane.dao.ProductImageDAO;
 import com.shoplane.dao.ProductTypeDAO;
 import com.shoplane.models.Category;
+import com.shoplane.models.Option;
+import com.shoplane.models.Order;
 import com.shoplane.models.Product;
+import com.shoplane.models.ProductImage;
 import com.shoplane.models.ProductType;
 import com.shoplane.services.SuperService;
 import com.shoplane.utils.Constants;
@@ -23,12 +29,16 @@ public class ProductService extends SuperService {
   ProductDAO productDAO = null;
   ProductTypeDAO productTypeDAO = null;
   CategoryDAO categoryDAO = null;
+  ProductImageDAO productImageDAO = null;
+  OptionDAO optionDAO = null;
 
   public ProductService(HttpServletRequest request, HttpServletResponse response) {
     super(request, response);
     this.productDAO = new ProductDAO();
     this.productTypeDAO = new ProductTypeDAO();
     this.categoryDAO = new CategoryDAO();
+    this.productImageDAO = new ProductImageDAO();
+    this.optionDAO = new OptionDAO();
   }
 
   // [GET] ListProductServlet => Client side
@@ -112,4 +122,111 @@ public class ProductService extends SuperService {
       super.redirectToPage(error);
     }
   }
+
+  // [GET] ProductDetailServlet
+  public void getProductDetail() throws IOException {
+    try {
+      // Set encoding
+      super.setEncoding(Constants.UTF8);
+      String url = "/pages/default/productDetail.jsp";
+      // Get data
+      String productId = super.getParameter("product_id").trim();
+      if (productId != null) {
+        // Get product by productId
+        Product product = this.productDAO.find(productId);
+
+        request.getSession().setAttribute("product", product);
+
+        // Get list image preview
+        List<ProductImage> productImages = this.productImageDAO.findByProduct(product);
+        request.setAttribute("productImages", productImages);
+
+        List<Option> options = this.optionDAO.findByProduct(product);
+        request.setAttribute("options", options);
+
+        // Forward url
+        super.forwardToPage(url);
+
+      }
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+  }
+
+  // [POST] addProductToCart
+  public void addProductItemToCart() throws IOException {
+    try {
+      // Get data from input form
+      super.setEncoding(Constants.UTF8);
+      String optionId = super.getParameter("oId").trim();
+      String quantyString = super.getParameter("quanty").trim();
+      int quanty = Integer.parseInt(quantyString);
+      // Get Option
+      Option option = this.optionDAO.find(optionId);
+      // Calc price
+      int price = option.getProduct().getNewPrice() * quanty;
+      // orderid
+      String oId = Helper.getRandom();
+      // Create order
+      Order o = new Order();
+      o.setOrderId(oId);
+      o.setDate(new Date());
+      o.setOrderedQuantity(quanty);
+      o.setPrice(price);
+      o.setOption(option);
+
+      // Add order to list
+      @SuppressWarnings("unchecked")
+      List<Order> ors = (List<Order>) super.getSession().getAttribute("orders");
+      if (ors == null) {
+        ors = new ArrayList<>();
+        ors.add(o);
+      } else {
+        boolean flag = false;
+        for (Order or : ors) {
+          if (or.getOption().getOptionId().equals(o.getOption().getOptionId())) {
+            int currOrderQuanty = or.getOrderedQuantity() + o.getOrderedQuantity();
+            int newPriceOrder = or.getPrice() + o.getPrice();
+            or.setOrderedQuantity(currOrderQuanty);
+            or.setPrice(newPriceOrder);
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) {
+          ors.add(o);
+        }
+      }
+      // Set att session
+      super.getSession().setAttribute("orders", ors);
+      super.getSession().setAttribute("orderSize", ors.size());
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+  }
+
+  // [GET] SearchProductServlet
+  public void searchProductByName() throws IOException {
+    try {
+      super.setEncoding(Constants.UTF8);
+      String url = "/pages/default/searchProduct.jsp";
+      String productName = request.getParameter("product_name").trim();
+      if (productName != null) {
+        List<Product> listProductWithSearch = new ArrayList<>();
+        listProductWithSearch = this.productDAO.findByProductName(productName);
+        super.setAttribute("findProduct", productName);
+        super.setAttribute("listProductWithSearch", listProductWithSearch);
+        super.forwardToPage(url);
+      }
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+  }
+
 }

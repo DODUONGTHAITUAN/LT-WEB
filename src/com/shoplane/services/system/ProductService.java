@@ -411,4 +411,45 @@ public class ProductService extends SuperService {
     }
   }
 
+  // [POST] RecoveryProductServlet
+  public void recoveryAllProducts() throws IOException {
+    try {
+      super.setEncoding(Constants.UTF8);
+      // Link
+      String url = super.getContextPath()
+          + "/system/products/?product_type=ALL&category=AO5&current_page=1&page_size=10";
+
+      // Get Param
+      String productsSelected = super.getParameter("productsSelected");
+      System.out.println(productsSelected);
+      String[] productIds = null;
+      List<Product> products = new ArrayList<>();
+      Product product = null;
+      byte isDeleted = 0;
+
+      // Convert ids str to Array
+      if (!productsSelected.equals("")) {
+        productIds = productsSelected.split(",");
+      }
+      // Check
+      if (productIds != null) {
+        for (String productId : productIds) {
+          product = this.productDAO.find(productId);
+          product.setIsDelete(isDeleted);
+          products.add(product);
+        }
+      }
+
+      // Update to isdeleted field
+      this.productDAO.bulkUpdate(products);
+
+      // Redirect
+      super.redirectToPage(url);
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/system/500";
+      super.redirectToPage(error);
+    }
+  }
+
 }

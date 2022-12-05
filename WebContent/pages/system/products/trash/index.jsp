@@ -39,8 +39,9 @@ int[] entries = {10, 20, 30};
 						rác</a>
 				</div>
 				<div class="actions">
-					<a href="" class="btnDeleteProducts">Xóa tất cả</a> <a
-						href="<%=context%>/system/products/trash/">Khôi phục tất cả</a>
+					<a href="" class="btnDeleteProducts">Xóa tất cả</a> <span
+						style="cursor: pointer;" class="btnRecoveryProducts">Khôi
+						phục tất cả</span>
 				</div>
 				<div class="table">
 					<div class="table__head">
@@ -106,6 +107,8 @@ int[] entries = {10, 20, 30};
 		hidden />
 	<!-- Jquery -->
 	<jsp:include page="../../components/script.jsp"></jsp:include>>
+	<script type="text/javascript"
+		src="<%=context%>/assets/js/system/recoveryProducts.js"></script>
 	<script>
 		const recoveryProductItemStatus = $('#recoveryProductItemStatus').val();
 		if (recoveryProductItemStatus === 'success') {

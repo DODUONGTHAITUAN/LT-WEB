@@ -4,7 +4,7 @@
 
 <%
 request.setCharacterEncoding(Constants.UTF8);
-response.setCharacterEncoding(Constants.UTF8);;
+response.setCharacterEncoding(Constants.UTF8);
 String context = request.getContextPath();
 String url = context + "/default/account/login";
 %>
