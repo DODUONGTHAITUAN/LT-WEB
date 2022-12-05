@@ -1,8 +1,11 @@
 package com.shoplane.services.client;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,7 +51,8 @@ public class CustomerService extends SuperService {
       super.forwardToPage(url);
       // reomve att session
       super.getSession().setAttribute("status", null);
-      super.getSession().removeAttribute("status");
+      super.getSession().setAttribute("filterMsg", "");
+      super.getSession().setAttribute("resetPasswordStatus", null);
 
     } catch (Exception e) {
       super.log(e.getMessage());
@@ -247,6 +251,168 @@ public class CustomerService extends SuperService {
 
       // Redirect /login
       super.redirectToPage(url);
+
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+  }
+
+  // [GET] ForgotPasswordServlet
+  public void getForgotPasswordForm() throws IOException {
+    try {
+      // Set encoding
+      super.setEncoding(Constants.UTF8);
+      // link
+      String url = "/pages/default/account/forgotPasswordAccount.jsp";
+
+      // Forward
+      super.forwardToPage(url);
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+  }
+
+  // [POST] ForgotPasswordServlet
+  public void submitForgotPasswordForm() throws IOException {
+    try {
+      super.setEncoding(Constants.UTF8);
+      String url = "";
+      String errMsg = "";
+
+      // Remove OTP if exist
+      Cookie OTPCookieRemove = new Cookie("OTP", "");
+      OTPCookieRemove.setMaxAge(0);
+      response.addCookie(OTPCookieRemove);
+
+      // get User
+      String email = super.getParameter("email").trim();
+      User user = this.userDAO.findByEmail(email);
+
+      if (user != null) {
+        // Create OTP cookie
+        String OTP = Helper.getRandom();
+        Cookie otpCookie = new Cookie("OTP", OTP);
+        otpCookie.setMaxAge(120);
+        response.addCookie(otpCookie);
+        // Send mail
+        SendMail sendMail = new SendMail();
+        boolean isSended = sendMail.sendResetPassword(user.getEmail(), OTP);
+
+        if (isSended) {
+          System.out.println("Send success");
+        } else {
+          System.out.println("Send fail");
+        }
+        // Set email user in session
+        super.getSession().setAttribute("emailUserForgotPassword", user.getEmail());
+
+        url = super.getContextPath() + "/forgot-password/verify";
+        super.redirectToPage(url);
+      } else {
+        errMsg = "* Email không hợp lệ. Vui lòng nhập lại!";
+        super.setAttribute("errMsg", errMsg);
+        this.getForgotPasswordForm();
+      }
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+  }
+
+  // [GET] CustomerVerifyOTPForgotPasswordServlet
+  public void getFormVerifyOTPForgotPassword() throws IOException {
+
+    try {
+      super.setEncoding(Constants.UTF8);
+      String url = "/pages/default/account/verifyOTPForgotPassword.jsp";
+      super.forwardToPage(url);
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+  }
+
+  // [POST] CustomerVerifyOTPForgotPasswordServlet
+  public void submitFormVerifyOTPForgotPassword() throws IOException {
+    try {
+      super.setEncoding(Constants.UTF8);
+      String url = super.getContextPath() + "/forgot-password/change";
+      String otpInput = super.getParameter("otp").trim();
+      String otpCookie = "";
+      String errMsg = "";
+
+      List<Cookie> cookies = Arrays.asList(request.getCookies());
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("OTP")) {
+          otpCookie = cookie.getValue();
+          break;
+        }
+      }
+
+      if (otpCookie.equals(otpInput)) {
+        super.redirectToPage(url);
+      } else {
+        errMsg = "* Mã xác nhận không chính xác";
+        super.setAttribute("errMsg", errMsg);
+        this.getFormVerifyOTPForgotPassword();
+      }
+
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+
+  }
+
+  public void getResetPasswordForm() throws IOException {
+    try {
+      super.setEncoding(Constants.UTF8);
+      String url = "/pages/default/account/resetPassword.jsp";
+      super.forwardToPage(url);
+    } catch (Exception e) {
+      super.log(e.getMessage());
+      String error = super.getContextPath() + "/500";
+      super.redirectToPage(error);
+    }
+  }
+
+  public void submitResetPasswordForm() throws IOException {
+    try {
+      super.setEncoding(Constants.UTF8);
+
+      String url = super.getContextPath() + "/login";
+      String resetPasswordStatus = "";
+      String newPassword = super.getParameter("newPassword").trim();
+      String confirmPassword = super.getParameter("confirmPassword").trim();
+      String email = (String) super.getSession().getAttribute("emailUserForgotPassword");
+      String pwdHashed = "";
+      String errMsg = "";
+      User user = this.userDAO.findByEmail(email);
+
+      if (newPassword.equals(confirmPassword)) {
+        pwdHashed = Bcrypt.hashpwd(newPassword);
+        if (user != null) {
+          user.setPassword(pwdHashed);
+          this.userDAO.update(user);
+          resetPasswordStatus = Constants.SUCCESS_STATUS;
+        } else {
+          url = super.getContextPath() + "/forgot-password";
+          resetPasswordStatus = Constants.FAILURE_STATUS;
+        }
+        super.getSession().setAttribute("resetPasswordStatus", resetPasswordStatus);
+        super.redirectToPage(url);
+      } else {
+        errMsg = "* Xác nhận mật khẩu không chính xác. Vui lòng nhập lại";
+        super.setAttribute("errMsg", errMsg);
+        this.getResetPasswordForm();
+      }
 
     } catch (Exception e) {
       super.log(e.getMessage());

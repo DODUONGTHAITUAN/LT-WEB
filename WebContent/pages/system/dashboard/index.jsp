@@ -1,3 +1,4 @@
+<%@page import="com.shoplane.utils.Helper"%>
 <%@page import="com.shoplane.utils.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -50,11 +51,12 @@ String context = request.getContextPath();
 }
 
 .cards__content>.cards__content-title {
-	font-size: 1.4rem;
+	font-size: 1.6rem;
+	font-weight: 600;
 }
 
 .cards__content>.cards__content-count {
-	font-size: 2.5rem;
+	font-size: 2.2rem;
 	font-weight: 700;
 }
 
@@ -90,6 +92,21 @@ String context = request.getContextPath();
 
 .charts__item {
 	min-width: calc(50% - 3rem);
+	min-height: 40rem;
+	border: 1px solid #d2d2d2;
+	background-color #f2f2f2;
+	border-radius: 0.4rem;
+	padding: 1rem;
+
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.charts__item > .charts__item-name {
+	font-style: italic;
+	font-size: 1.2rem;
 }
 </style>
 </head>
@@ -108,8 +125,8 @@ String context = request.getContextPath();
 						<div class="cards__body">
 							<i class="teal fas fa-shopping-cart"></i>
 							<div class="cards__content">
-								<span class="cards__content-title">Đơn hàng mới</span> <span
-									class="cards__content-count">6,267</span>
+								<span class="cards__content-title">Tổng số đơn hàng</span> <span
+									class="cards__content-count">${billCount}</span>
 							</div>
 						</div>
 						<div class="cards__div"></div>
@@ -119,36 +136,42 @@ String context = request.getContextPath();
 					</div>
 					<div class="cards__item">
 						<div class="cards__body">
-							<i class="teal fas fa-shopping-cart"></i>
+							<i class="fas fa-users" style="color: green"></i>
 							<div class="cards__content">
-								<span class="cards__content-title">NEW ORDERS</span> <span
-									class="cards__content-count">6,267</span>
+								<span class="cards__content-title">Tổng số người dùng</span> <span
+									class="cards__content-count">${userCount}</span>
 							</div>
 						</div>
 						<div class="cards__div"></div>
-						<div class="cards__footer"></div>
+						<div class="cards__footer">
+							<i class="fas fa-calendar"></i> <span>Trong vòng một tuần</span>
+						</div>
 					</div>
 					<div class="cards__item">
 						<div class="cards__body">
-							<i class="teal fas fa-shopping-cart"></i>
+							<i class="fab fa-product-hunt" style="color: purple"></i>
 							<div class="cards__content">
-								<span class="cards__content-title">NEW ORDERS</span> <span
-									class="cards__content-count">6,267</span>
+								<span class="cards__content-title">Tổng sản phẩm</span> <span
+									class="cards__content-count">${productCount}</span>
 							</div>
 						</div>
 						<div class="cards__div"></div>
-						<div class="cards__footer"></div>
+						<div class="cards__footer">
+							<i class="fas fa-calendar"></i> <span>Trong vòng một tuần</span>
+						</div>
 					</div>
 					<div class="cards__item">
 						<div class="cards__body">
-							<i class="teal fas fa-shopping-cart"></i>
+							<i class="fas fa-dollar-sign" style="color: pink"></i>
 							<div class="cards__content">
-								<span class="cards__content-title">NEW ORDERS</span> <span
-									class="cards__content-count">6,267</span>
+								<span class="cards__content-title">Doanh thu</span> <span
+									class="cards__content-count">${Helper.intToVND(totalPriceBills)}</span>
 							</div>
 						</div>
 						<div class="cards__div"></div>
-						<div class="cards__footer"></div>
+						<div class="cards__footer">
+							<i class="fas fa-calendar"></i> <span>Trong vòng một tuần</span>
+						</div>
 					</div>
 				</div>
 				<div class="charts">
@@ -166,10 +189,10 @@ String context = request.getContextPath();
 				<div class="cards">
 					<div class="cards__item">
 						<div class="cards__body">
-							<i class="teal fas fa-shopping-cart"></i>
+							<i class="fas fa-thumbs-up" style="color: blue"></i>
 							<div class="cards__content">
-								<span class="cards__content-title">Đơn hàng mới</span> <span
-									class="cards__content-count">6,267</span>
+								<span class="cards__content-title">FACEBOOK PAGE LIKES</span> <span
+									class="cards__content-count">+21,900</span>
 							</div>
 						</div>
 						<div class="cards__div"></div>
@@ -179,36 +202,46 @@ String context = request.getContextPath();
 					</div>
 					<div class="cards__item">
 						<div class="cards__body">
-							<i class="teal fas fa-shopping-cart"></i>
+							<i class="orange large-icon mb-2 fas fa-reply-all"
+								style="color: orange"></i>
 							<div class="cards__content">
-								<span class="cards__content-title">NEW ORDERS</span> <span
-									class="cards__content-count">6,267</span>
+								<span class="cards__content-title">INSTAGRAM FOLLOWERS</span> <span
+									class="cards__content-count">+22,566</span>
 							</div>
 						</div>
 						<div class="cards__div"></div>
-						<div class="cards__footer"></div>
+						<div class="cards__footer">
+							<i class="fas fa-calendar"></i> <span>Trong vòng một tuần</span>
+						</div>
 					</div>
 					<div class="cards__item">
 						<div class="cards__body">
-							<i class="teal fas fa-shopping-cart"></i>
+							<i class="fas fa-mail-bulk" style="color: grey"></i>
 							<div class="cards__content">
-								<span class="cards__content-title">NEW ORDERS</span> <span
-									class="cards__content-count">6,267</span>
+								<span class="cards__content-title">E-MAIL SUBSCRIBERS</span> <span
+									class="cards__content-count">+15,566</span>
 							</div>
 						</div>
 						<div class="cards__div"></div>
-						<div class="cards__footer"></div>
+						<div class="cards__footer">
+							<i class="fas fa-calendar"></i> <span>Trong vòng một tuần</span>
+						</div>
 					</div>
 					<div class="cards__item">
 						<div class="cards__body">
-							<i class="teal fas fa-shopping-cart"></i>
+							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+								style="color: black" fill="currentColor" class="bi bi-tiktok"
+								viewBox="0 0 16 16"> <path
+									d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z" /> </svg>
 							<div class="cards__content">
-								<span class="cards__content-title">NEW ORDERS</span> <span
-									class="cards__content-count">6,267</span>
+								<span class="cards__content-title">TIKTOK FOLLOWERS</span> <span
+									class="cards__content-count">+6,267</span>
 							</div>
 						</div>
 						<div class="cards__div"></div>
-						<div class="cards__footer"></div>
+						<div class="cards__footer">
+							<i class="fas fa-calendar"></i> <span>Trong vòng một tuần</span>
+						</div>
 					</div>
 				</div>
 				<div class="charts">
@@ -216,6 +249,7 @@ String context = request.getContextPath();
 						<div class="canvas-wrapper">
 							<canvas id="myPieChart"></canvas>
 						</div>
+						<div class="charts__item-name">Biểu đồ người dùng</div>
 					</div>
 					<div class="charts__item">
 						<canvas id="myAreaChart"></canvas>
@@ -224,6 +258,9 @@ String context = request.getContextPath();
 			</main>
 		</div>
 	</div>
+	<input type="text" hidden id="adminUserCount" value="${adminUserCount}"/>
+	<input type="text" hidden id="customerUserCount" value="${customerUserCount}"/>
+	<input type="text" hidden id="employeeUserCount" value="${employeeUserCount}"/>
 	<!-- Jquery -->
 	<jsp:include page="../components/script.jsp"></jsp:include>
 	<script type="text/javascript"

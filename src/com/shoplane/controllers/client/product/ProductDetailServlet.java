@@ -8,21 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.shoplane.dao.OptionDAO;
-import com.shoplane.dao.ProductDAO;
 import com.shoplane.services.client.ProductService;
 
 @WebServlet(urlPatterns = { "/product-detail", "/product-detail/" })
 public class ProductDetailServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  OptionDAO optionDAO = null;
-  ProductDAO productDAO = null;
-
   public ProductDetailServlet() {
     super();
-    optionDAO = new OptionDAO();
-    this.productDAO = new ProductDAO();
   }
 
   @Override

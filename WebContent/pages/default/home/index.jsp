@@ -32,9 +32,20 @@ String baseUrl = request.getContextPath() + "/default/home";
 		<jsp:include page="../components/footer.jsp" />
 		<jsp:include page="../components/backToTop.jsp" />
 	</div>
+	<input id="filterMsg" value="${sessionScope.filterMsg}" hidden />
 	<!-- Import script -->
 	<jsp:include page="../components/script.jsp" />
 	<script type="text/javascript"
 		src="<%=context%>/assets/js/default/sliderConfig.js"></script>
+	<script>
+		const filterMsg = $('#filterMsg').val();
+
+		if (filterMsg !== '') {
+			swal("Thông báo", filterMsg, "warning");
+		}
+	</script>
 </body>
 </html>
+<%
+request.getSession().setAttribute("filterMsg", "");
+%>

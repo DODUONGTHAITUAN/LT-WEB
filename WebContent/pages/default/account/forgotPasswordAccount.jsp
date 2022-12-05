@@ -23,7 +23,7 @@ String url = context + "/default/account/login";
 			<div class="container">
 				<section id="login">
 					<div class="border border-1 rounded login-form">
-						<form action="login" method="POST">
+						<form action="" method="POST">
 							<h1 class="login-header">KHÔI PHỤC MẬT KHẨU</h1>
 							<input type="text" hidden name="caller" value="${caller}" /> <input
 								class="form-control" type="email" name="email"

@@ -70,12 +70,15 @@ var myChart2 = new Chart(saleschart, {
 
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
+const employeeUserCount = $('#employeeUserCount').val();
+const adminUserCount = $('#adminUserCount').val();
+const customerUserCount = $('#customerUserCount').val();
 var myPieChart = new Chart(ctx, {
 	type: 'doughnut',
 	data: {
-		labels: ["Direct", "Referral", "Social"],
+		labels: ["Quản trị viên", "Nhân viên", "Khách hàng"],
 		datasets: [{
-			data: [55, 30, 15],
+			data: [adminUserCount, employeeUserCount, customerUserCount],
 			backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
 			hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
 			hoverBorderColor: "rgba(234, 236, 244, 1)",

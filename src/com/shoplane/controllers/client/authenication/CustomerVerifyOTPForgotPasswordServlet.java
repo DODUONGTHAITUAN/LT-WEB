@@ -1,4 +1,4 @@
-package com.shoplane.controllers.client.order;
+package com.shoplane.controllers.client.authenication;
 
 import java.io.IOException;
 
@@ -8,26 +8,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.shoplane.services.client.CartService;
+import com.shoplane.services.client.CustomerService;
 
-@WebServlet(urlPatterns = { "/checkout", "/checkout/" })
-public class CartCheckoutServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/forgot-password/verify", "/forgot-password/verify/" })
+public class CustomerVerifyOTPForgotPasswordServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  public CartCheckoutServlet() {
+  public CustomerVerifyOTPForgotPasswordServlet() {
     super();
   }
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    CartService cartService = new CartService(request, response);
-    cartService.getCheckoutOrdersForm();
+    CustomerService customerService = new CustomerService(request, response);
+    customerService.getFormVerifyOTPForgotPassword();
   }
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    CartService cartService = new CartService(request, response);
-    cartService.submitCheckoutOrders();
+    CustomerService customerService = new CustomerService(request, response);
+    customerService.submitFormVerifyOTPForgotPassword();
   }
 
 }

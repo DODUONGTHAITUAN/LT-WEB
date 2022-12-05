@@ -1,4 +1,4 @@
-@charset "UTF-8"; 
+@charset "UTF-8";
 
 .login-form, .register-form, .modify-form {
 	margin: 100px auto;
@@ -81,11 +81,19 @@
 .signin-text:hover {
 	color: #000000;
 }
+
 .err__msg {
 	transform: translateY(-1rem);
 	font-size: 1.2rem;
 	color: red;
 	margin-bottom: 0.5rem;
+}
+
+.register-title {
+	font-size: 1.4rem;
+	margin-bottom: 1.4rem;
+	display: block;
+	color: red;
 }
 
 @media ( max-width : 768px) {

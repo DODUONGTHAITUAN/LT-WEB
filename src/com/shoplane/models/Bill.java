@@ -29,7 +29,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Bill.findByUser", query = "SELECT b FROM Bill b WHERE b.user = :user"),
     @NamedQuery(name = "Bill.findByStatus", query = "SELECT b FROM Bill b WHERE b.statusBill = :statusBill ORDER BY b.totalPrice DESC"),
     @NamedQuery(name = "Bill.count", query = "SELECT COUNT(b) FROM Bill b"),
-    @NamedQuery(name = "Bill.countByStatus", query = "SELECT COUNT(b) FROM Bill b WHERE b.statusBill = :statusBill")
+    @NamedQuery(name = "Bill.countByStatus", query = "SELECT COUNT(b) FROM Bill b WHERE b.statusBill = :statusBill"),
+    @NamedQuery(name = "Bill.totalPrice", query = "SELECT SUM(b.totalPrice) FROM Bill b")
 })
 public class Bill implements Serializable {
   private static final long serialVersionUID = 1L;

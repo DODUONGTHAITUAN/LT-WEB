@@ -73,4 +73,9 @@ public class BillDAO extends JpaDAO<Bill> implements GenericDAO<Bill> {
     return super.countWithNamedQuery(queryName, parameters);
   }
 
+  public int totalPrice() {
+    String queryName = "Bill.totalPrice";
+    return super.count(queryName);
+  }
+
 }
