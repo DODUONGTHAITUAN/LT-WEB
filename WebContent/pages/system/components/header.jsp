@@ -16,9 +16,8 @@ String context = request.getContextPath();
 				alt="" class="header__userinfo-img">
 			<div class="dropdown-content">
 				<a
-					href="">Tài khoản</a>
-				<a
-					href="">Đăng xuất</a>
+					href="<%=context%>/system/users/edit/?user_id=${sessionScope.user.getUserId()}">Tài
+					khoản</a> <a href="<%=context%>/logout/">Đăng xuất</a>
 			</div>
 		</div>
 

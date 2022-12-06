@@ -82,4 +82,11 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
     return super.countWithNamedQuery(queryName, parameters);
   }
 
+  public boolean isExistsByEmail(String email) {
+    String queryName = "User.isExistsByEmail";
+    Map<String, Object> params = new HashMap<>();
+    params.put("email", email);
+    return super.isExistsByNamedQuery(queryName, params);
+  }
+
 }

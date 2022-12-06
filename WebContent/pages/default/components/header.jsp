@@ -14,15 +14,6 @@
 
 <%
 String context = request.getContextPath();
-ProductTypeDAO productTypeDAO = new ProductTypeDAO();
-CategoryDAO categoryDAO = new CategoryDAO();
-
-ProductType shirtProductType = productTypeDAO.find(Constants.SHIRT);
-List<Category> shirtCategories = categoryDAO.findByProductType(shirtProductType);
-
-ProductType shortProductType = productTypeDAO.find(Constants.SHORT);
-List<Category> shortCategories = categoryDAO.findByProductType(shortProductType); 
-
 // Flow 
 String url = null;
 url = context + "/login";
@@ -45,7 +36,7 @@ if (u != null) {
 					<a
 						href="<%=context%>/collection/?product_type=<%=Constants.SHIRT%>&category_id=<%=Constants.SHIRT_ALL%>&current_page=1&page_size=12">ÁO</a>
 					<div class="dropdown-content">
-						<c:forEach var="item" items="<%=shirtCategories%>">
+						<c:forEach var="item" items="${sessionScope.shirtCategories}">
 							<a
 								href="<%=context %>/collection/?product_type=<%=Constants.SHIRT %>&category_id=${item.getCategoryId()}&current_page=1&page_size=12">${item.getCategoryName()}</a>
 						</c:forEach>
@@ -55,7 +46,7 @@ if (u != null) {
 					<a
 						href="<%=context%>/collection/?product_type=<%=Constants.SHORT%>&category_id=<%=Constants.SHORT_ALL%>&current_page=1&page_size=12">QUẦN</a>
 					<div class="dropdown-content">
-						<c:forEach var="item" items="<%=shortCategories%>">
+						<c:forEach var="item" items="${sessionScope.shortCategories}">
 							<a
 								href="<%=context %>/collection/?product_type=<%=Constants.SHORT %>&category_id=${item.getCategoryId()}&current_page=1&page_size=12">${item.getCategoryName() }</a>
 						</c:forEach>

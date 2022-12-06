@@ -17,21 +17,13 @@ request.setCharacterEncoding(Constants.UTF8);
 response.setCharacterEncoding(Constants.UTF8);
 
 String context = request.getContextPath();
-ProductType productType = productTypeDAO.find(Constants.SHIRT);
-
-Map<String, Object> params = new HashMap<>();
-params.put("isDelete", (byte) 0);
-params.put("productType", productType);
-
-List<Product> products = new ArrayList<>();
-products = productDAO.paginationByProductTypeAndIsDeleted(params, 1, 12, Constants.ASC);
 %>
 
 <section class="catalog">
 	<div class="container">
 		<h1 class="catalog__heading">DANH MỤC ÁO</h1>
 		<div class="catalog__list">
-			<c:forEach var="item" items="<%=products%>">
+			<c:forEach var="item" items="${shirtProducts}">
 				<div class="catalog__item">
 					<div class="group_content">
 						<div class="home-product-item__img"

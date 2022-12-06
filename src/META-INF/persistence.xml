@@ -19,11 +19,11 @@
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/TFcT8GlodF" />
+				value="jdbc:mysql://doduongthaituan.c0eth9rjuiua.ap-northeast-1.rds.amazonaws.com:3306/TFcT8GlodF" />
 			<property name="javax.persistence.jdbc.user"
-				value="root" />
+				value="admin" />
 			<property name="javax.persistence.jdbc.password"
-				value="201102" />
+				value="Tuanvn12345" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.jdbc.Driver" />
 

@@ -26,6 +26,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role"),
     @NamedQuery(name = "User.count", query = "SELECT COUNT(u) FROM User u"),
     @NamedQuery(name = "User.countByRole", query = "SELECT COUNT(u) FROM User u WHERE u.role = :role"),
+    @NamedQuery(name = "User.isExistsByEmail", query = "SELECT COUNT(u) FROM User u WHERE u.email = :email"),
+
 })
 public class User implements Serializable {
   private static final long serialVersionUID = 1L;

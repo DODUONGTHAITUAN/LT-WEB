@@ -93,18 +93,16 @@ String context = request.getContextPath();
 .charts__item {
 	min-width: calc(50% - 3rem);
 	min-height: 40rem;
-	border: 1px solid #d2d2d2;
-	background-color #f2f2f2;
+	border: 1px solid #d2d2d2; background-color #f2f2f2;
 	border-radius: 0.4rem;
 	padding: 1rem;
-
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	gap: 2rem;
 }
 
-.charts__item > .charts__item-name {
+.charts__item>.charts__item-name {
 	font-style: italic;
 	font-size: 1.2rem;
 }
@@ -258,13 +256,23 @@ String context = request.getContextPath();
 			</main>
 		</div>
 	</div>
-	<input type="text" hidden id="adminUserCount" value="${adminUserCount}"/>
-	<input type="text" hidden id="customerUserCount" value="${customerUserCount}"/>
-	<input type="text" hidden id="employeeUserCount" value="${employeeUserCount}"/>
+	<input type="text" id="filterMsg" value="${sessionScope.filterMsg}" hidden />
+	<input type="text" hidden id="adminUserCount" value="${adminUserCount}" />
+	<input type="text" hidden id="customerUserCount"
+		value="${customerUserCount}" />
+	<input type="text" hidden id="employeeUserCount"
+		value="${employeeUserCount}" />
 	<!-- Jquery -->
 	<jsp:include page="../components/script.jsp"></jsp:include>
 	<script type="text/javascript"
 		src="<%=context%>/assets/js/system/dashboard/chart.js"></script>
+
+	<script>
+		const filterMsg = $('#filterMsg').val();
+		if (filterMsg !== '') {
+			swal("Thông báo", filterMsg, "warning");
+		}
+	</script>
 </body>
 </html>
 

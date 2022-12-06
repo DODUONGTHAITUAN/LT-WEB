@@ -5,61 +5,58 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.shoplane.dao.UserDAO;
 import com.shoplane.models.User;
 import com.shoplane.utils.Constants;
 
-public class AuthorizationFilterServlet implements Filter {
-  private ServletContext servletContext = null;
+@WebFilter("/account/*")
+public class AccountFilterServlet implements Filter {
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
-    // TODO Auto-generated method stub
     Filter.super.init(filterConfig);
-    this.servletContext = filterConfig.getServletContext();
   }
 
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
       throws IOException, ServletException {
-
     // Convert to Http
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpServletResponse response = (HttpServletResponse) servletResponse;
-
-    // Get uri
-    String url = request.getRequestURI();
     String filterMsg = "";
 
-    // Check
-    if (url.contains("/system")) {
-      User user = (User) request.getSession().getAttribute(Constants.USER_SESSION);
-      if (user != null) {
-        System.out.println("Hello world 2");
-        // If admin
-        if (user.getRole().getRoleId().equals(Constants.ADMIN_ROLE)) {
+    UserDAO userDAO = new UserDAO();
+    User user = (User) request.getSession().getAttribute(Constants.USER_SESSION);
+
+    if (user != null) {
+      // Check user has created in db
+      boolean isExist = userDAO.isExistsByEmail(user.getEmail());
+      if (isExist) {
+        if (user.getRole().getRoleId().equals(Constants.USER_ROLE)) {
           chain.doFilter(request, response);
+          return;
         } else {
-          // Normal user => Return home
-          filterMsg = "Đường dẫn không hợp lệ";
+          // Not a normal user
+          filterMsg = "Hãy đăng nhập với tài khoản khách hàng để truy cập đường dẫn này!";
           request.getSession().setAttribute("filterMsg", filterMsg);
-          response.sendRedirect(servletContext.getContextPath() + "/");
+          response.sendRedirect(request.getContextPath() + "/system/");
+          return;
         }
       } else {
-        // user isn't exits
-        filterMsg = "Đăng nhập trước khi truy cập đường dẫn này!";
-        request.getSession().setAttribute("filterMsg", filterMsg);
-        response.sendRedirect(servletContext.getContextPath() + "/login");
+        // Clear session
+        request.getSession().setAttribute(Constants.USER_SESSION, null);
       }
-    } else {
-      chain.doFilter(request, response);
     }
+    // user isn't exits
+    filterMsg = "Trước tiên bạn cần đăng nhập!";
+    request.getSession().setAttribute("filterMsg", filterMsg);
+    response.sendRedirect(request.getContextPath() + "/login");
   }
-
 }

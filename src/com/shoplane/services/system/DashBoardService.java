@@ -74,6 +74,8 @@ public class DashBoardService extends SuperService {
       // Set url active sidebar
       super.getSession().setAttribute("urlPatten", "");
       super.forwardToPage(url);
+
+      super.getSession().setAttribute("filterMsg", "");
     } catch (Exception e) {
       super.log(e.getMessage());
       String error = super.getContextPath() + "/system/500";

@@ -149,4 +149,18 @@ public class JpaDAO<T> {
     entityManager.close();
     return maxResults;
   }
+
+  public boolean isExistsByNamedQuery(String queryName, Map<String, Object> params) {
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    entityManager.getTransaction().begin();
+    Query query = entityManager.createNamedQuery(queryName);
+    Set<Entry<String, Object>> setParameters = params.entrySet();
+    for (Entry<String, Object> entry : setParameters) {
+      query.setParameter(entry.getKey(), entry.getValue());
+    }
+    int maxResults = ((Long) query.getSingleResult()).intValue();
+    entityManager.getTransaction().commit();
+    entityManager.close();
+    return maxResults > 0;
+  }
 }
