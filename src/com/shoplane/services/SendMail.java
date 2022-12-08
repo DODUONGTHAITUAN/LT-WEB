@@ -23,14 +23,9 @@ public class SendMail {
   public boolean sendOTPSignUpAccount(User user) {
     boolean isSend = false;
     String toEmail = user.getEmail();
-    /*
-     * String fromEmail = "doduongthaituan201102@gmail.com";
-     * String fromPwd = "ddqzmkydrtjexbfj";
-     */
-    String fromEmail = "20110743@student.hcmute.edu.vn";
-    String fromPwd = "Tuanvn1234567890..";
+    String fromEmail = "nguyennhuttruong9972@gmail.com";
+    String fromPwd = "fvshylskxxiwmcnj";
     try {
-
       // your host email smtp server details
       Properties pr = new Properties();
       pr.setProperty("mail.smtp.host", "smtp.gmail.com");

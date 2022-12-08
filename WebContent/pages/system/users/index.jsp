@@ -65,8 +65,7 @@ String context = request.getContextPath();
 							</c:forEach>
 						</select> sản phẩm
 					</div>
-					<a href="<%=context%>/system/users/create">Thêm người dùng</a> <a
-						onclick="deleteUser(this)"> Xóa người dùng</a>
+					<a href="<%=context%>/system/users/create">Thêm người dùng</a> 
 				</div>
 				<div class="table">
 					<div class="table__head">

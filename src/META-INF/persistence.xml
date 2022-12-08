@@ -19,11 +19,11 @@
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/TFcT8GlodF" />
+				value="jdbc:mysql://us-cdbr-east-06.cleardb.net:3306/heroku_107f590d8807eda" />
 			<property name="javax.persistence.jdbc.user"
-				value="root" />
+				value="bb143e86dcf23a" />
 			<property name="javax.persistence.jdbc.password"
-				value="201102" />
+				value="229e7761" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.jdbc.Driver" />
 

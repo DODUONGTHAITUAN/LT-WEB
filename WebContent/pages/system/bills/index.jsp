@@ -14,9 +14,10 @@ String context = request.getContextPath();
 <head>
 <jsp:include page="../head.jsp" />
 <title>Quản lý đơn hàng - SHOPLANE</title>
-<link rel="stylesheet" href="<%=context%>/assets/css/system/bill/index.css"
-	type="text/css" />
-<link rel="stylesheet" href="<%=context%>/assets/css/system/components/pagination.css" />
+<link rel="stylesheet"
+	href="<%=context%>/assets/css/system/bill/index.css" type="text/css" />
+<link rel="stylesheet"
+	href="<%=context%>/assets/css/system/components/pagination.css" />
 </head>
 <body>
 	<div id="app">
@@ -35,7 +36,7 @@ String context = request.getContextPath();
 				<div class="actions">
 					<div class="action__select">
 						Trạng thái <select id="select__status"
-							onchange="javascript:handleSelectEntries(this)">
+							onchange="javascript:handleSelectStatus(this)">
 							<option value="2">Tất cả</option>
 							<option value="0">Chưa thanh toán</option>
 							<option value="1">Đã thanh toán</option>
@@ -68,10 +69,7 @@ String context = request.getContextPath();
 							</c:forEach>
 						</select> sản phẩm
 					</div>
-					<a href="<%=context%>/system/bills/create">Thêm đơn hàng</a> <a
-						href="#!"
-						onclick="event.preventDefault();document.getElementById('selectedBill').submit();">Xóa
-						đơn hàng</a>
+					<a href="<%=context%>/system/bills/create">Thêm đơn hàng</a>
 				</div>
 				<div class="table">
 					<div class="table__head">
@@ -131,10 +129,14 @@ String context = request.getContextPath();
 			</main>
 		</div>
 	</div>
-	<input type="text" id="createBillStatus" value="${sessionScope.createBillStatus}" hidden/>
-	<input type="text" id="editBillStatus" value="${sessionScope.editBillStatus}" hidden/>
+	<input type="text" id="createBillStatus"
+		value="${sessionScope.createBillStatus}" hidden />
+	<input type="text" id="editBillStatus"
+		value="${sessionScope.editBillStatus}" hidden />
 	<!-- Jquery -->
 	<jsp:include page="../components/script.jsp"></jsp:include>
+	<script type="text/javascript"
+		src="<%=context%>/assets/js/system/bills/index.js"></script>
 	<script>
 		const createBillStatus = $('#createBillStatus').val();
 		if (createBillStatus === 'success') {
