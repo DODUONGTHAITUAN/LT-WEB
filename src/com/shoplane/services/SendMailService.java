@@ -3,28 +3,38 @@ package com.shoplane.services;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.Authenticator;
+import com.shoplane.models.Bill;
+import com.shoplane.models.Order;
+import com.shoplane.models.User;
+import com.shoplane.utils.Helper;
+
+import jakarta.mail.Authenticator;
+import jakarta.mail.Message;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+
+/*
+ * import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+ * */
 
-import com.shoplane.models.Bill;
-import com.shoplane.models.Order;
-import com.shoplane.models.User;
-import com.shoplane.utils.Helper;
-
-public class SendMail {
-  public SendMail() {
+public class SendMailService {
+  public SendMailService() {
   }
 
   public boolean sendOTPSignUpAccount(User user) {
     boolean isSend = false;
     String toEmail = user.getEmail();
-    String fromEmail = "nguyennhuttruong9972@gmail.com";
-    String fromPwd = "fvshylskxxiwmcnj";
+    String fromEmail = "20110743@student.hcmute.edu.vn";
+    String fromPwd = "Tuanvn1234567890..";
     try {
       // your host email smtp server details
       Properties pr = new Properties();
@@ -701,6 +711,13 @@ public class SendMail {
           + "<td style=\"padding: 0 0 0 15px;\" align=\"right\">" + Helper.intToVND(order.getPrice()) + "</td>\r\n"
           + "</tr>";
     }
+    // Shipment
+    html += " <tr style=\"border-bottom:2px solid #ecedee;text-align:left;padding:15px 0;\">\r\n"
+        + "<td style=\"padding: 5px 15px 5px 0; font-weight:bold\">SHIP</td>\r\n"
+        + "<td style=\"padding: 0 15px;\"></td>"
+        + "<td style=\"padding: 0 0 0 15px; font-weight:bold\" align=\"right\">" + Helper.intToVND(35000)
+        + "</td>\r\n"
+        + "</tr>";
     // Total row
     html += " <tr style=\"border-bottom:2px solid #ecedee;text-align:left;padding:15px 0;\">\r\n"
         + "<td style=\"padding: 5px 15px 5px 0; font-weight:bold\">TOTAL</td>\r\n"

@@ -1,4 +1,4 @@
-@charset "UTF-8"; 
+@charset "UTF-8";
 
 .your__container {
 	display: flex;
@@ -57,6 +57,11 @@
 	padding-bottom: 1.2rem;
 	border-bottom: 1px solid #ddd;
 	margin-bottom: 1.2rem;
+}
+
+.your__order-title, .your__order-value {
+	width: 20%;
+	text-align: center;
 }
 
 .your__info-list {

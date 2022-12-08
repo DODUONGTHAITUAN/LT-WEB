@@ -13,7 +13,7 @@ import com.shoplane.dao.RoleDAO;
 import com.shoplane.dao.UserDAO;
 import com.shoplane.models.Role;
 import com.shoplane.models.User;
-import com.shoplane.services.SendMail;
+import com.shoplane.services.SendMailService;
 import com.shoplane.services.SuperService;
 import com.shoplane.utils.Bcrypt;
 import com.shoplane.utils.Constants;
@@ -144,7 +144,7 @@ public class CustomerService extends SuperService {
 
       if (userExits == null) {
         // init services
-        SendMail sm = new SendMail();
+        SendMailService sm = new SendMailService();
         // Get Role
         Role role = this.roleDAO.find(Constants.USER_ROLE);
         // Get hashed pwd
@@ -223,8 +223,8 @@ public class CustomerService extends SuperService {
         super.getSession().setAttribute("status", status);
 
         // Send mail
-        SendMail sendMail = new SendMail();
-        sendMail.sendSignUpSuccess(user.getEmail(), loginUrl);
+        SendMailService sendMailService = new SendMailService();
+        sendMailService.sendSignUpSuccess(user.getEmail(), loginUrl);
         super.redirectToPage(url);
         return;
       }
@@ -299,8 +299,8 @@ public class CustomerService extends SuperService {
         otpCookie.setMaxAge(120);
         response.addCookie(otpCookie);
         // Send mail
-        SendMail sendMail = new SendMail();
-        boolean isSended = sendMail.sendResetPassword(user.getEmail(), OTP);
+        SendMailService sendMailService = new SendMailService();
+        boolean isSended = sendMailService.sendResetPassword(user.getEmail(), OTP);
 
         if (isSended) {
           System.out.println("Send success");

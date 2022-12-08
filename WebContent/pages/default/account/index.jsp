@@ -1,3 +1,4 @@
+<%@page import="com.shoplane.utils.Helper"%>
 <%@page import="com.shoplane.utils.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -29,18 +30,18 @@ String url = context + "/default/account";
 							<div class="your__order-table-head">
 								<span class="your__order-title">Mã đơn hàng</span> <span
 									class="your__order-title">Ngày đặt</span> <span
-									class="your__order-title">Trạng thái thanh toán</span> <span
-									class="your__order-title">Trạng thái vận chuyển</span> <span
+									class="your__order-title">Thanh toán</span> <span
+									class="your__order-title">Vận chuyển</span> <span
 									class="your__order-title">Tổng tiền</span>
 							</div>
 							<div class="your__order-table-body">
 								<c:forEach var="item" items="${bills}">
 									<div class="your__order-table-item">
 										<a class="your__order-value" href="./my-orders.jsp">${item.getBillId()}</a>
-										<span class="your__order-value">01/09/2022</span> <span
-											class="your__order-value">Chưa hoàn tất</span> <span
+										<span class="your__order-value">${Helper.dateWithoutTime(item.getDate())}</span>
+										<span class="your__order-value">Chưa hoàn tất</span> <span
 											class="your__order-value">Đang vận chuyển</span> <span
-											class="your__order-value">${item.getTotalPrice()}đ</span>
+											class="your__order-value">${Helper.intToVND(item.getTotalPrice())}</span>
 									</div>
 								</c:forEach>
 							</div>

@@ -14,7 +14,7 @@ import com.shoplane.dao.UserDAO;
 import com.shoplane.models.Bill;
 import com.shoplane.models.Order;
 import com.shoplane.models.User;
-import com.shoplane.services.SendMail;
+import com.shoplane.services.SendMailService;
 import com.shoplane.services.SuperService;
 import com.shoplane.utils.Constants;
 import com.shoplane.utils.Helper;
@@ -121,6 +121,38 @@ public class CartService extends SuperService {
       String phonenumber = request.getParameter("phonenumber");
       String address = request.getParameter("address");
       String totalPriceStr = request.getParameter("totalPrice");
+      String provinceCodeStr = request.getParameter("provinceCode");
+      String districtCodeStr = request.getParameter("districtCode");
+      String wardCodeStr = request.getParameter("wardCode");
+
+      int provinceCode = -1;
+      int districtCode = -1;
+      int wardCode = -1;
+
+      if (provinceCodeStr != null && !provinceCodeStr.equals("")) {
+        if (Helper.isNumeric(provinceCodeStr)) {
+          provinceCode = Integer.parseInt(provinceCodeStr);
+        }
+      }
+
+      if (districtCodeStr != null && !districtCodeStr.equals("")) {
+        if (Helper.isNumeric(provinceCodeStr)) {
+          districtCode = Integer.parseInt(districtCodeStr);
+        }
+      }
+
+      if (wardCodeStr != null && !wardCodeStr.equals("")) {
+        if (Helper.isNumeric(wardCodeStr)) {
+          wardCode = Integer.parseInt(wardCodeStr);
+        }
+      }
+
+      // Update user
+      user.setProvinceCode(provinceCode);
+      user.setDistrictCode(districtCode);
+      user.setWardCode(wardCode);
+      user = this.userDAO.update(user);
+      super.getSession().setAttribute(Constants.USER_SESSION, user);
 
       // create Bill
       String billId = Helper.getRandom();
@@ -149,8 +181,8 @@ public class CartService extends SuperService {
         // Bill billCreated = new Bill();
         if (billCreated != null) {
           // Send mail
-          SendMail sendMail = new SendMail();
-          sendMail.sendReceipt(user.getEmail(), billCreated);
+          SendMailService sendMailService = new SendMailService();
+          sendMailService.sendReceipt(user.getEmail(), billCreated);
           super.getSession().removeAttribute("orders");
           super.getSession().removeAttribute("orderSize");
           String msg = Constants.SUCCESS_STATUS;

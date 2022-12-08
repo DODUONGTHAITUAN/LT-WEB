@@ -31,10 +31,12 @@ int totalPrice = priceOrders + Constants.SHIPMENT;
 <c:choose>
 	<c:when test="${orders.size() > 0}">
 
-		<link rel="stylesheet" href="<%=context%>/assets/css/default/checkout/checkout.css" />
+		<link rel="stylesheet"
+			href="<%=context%>/assets/css/default/checkout/checkout.css" />
 	</c:when>
 	<c:otherwise>
-		<link rel="stylesheet" href="<%=context%>/assets/css/default/checkout/checkoutSuccess.css" />
+		<link rel="stylesheet"
+			href="<%=context%>/assets/css/default/checkout/checkoutSuccess.css" />
 	</c:otherwise>
 </c:choose>
 <title>Thanh toán đơn hàng - SHOPLANE</title>
@@ -51,22 +53,53 @@ int totalPrice = priceOrders + Constants.SHIPMENT;
 						<div class="checkouts__container">
 							<div class="group_content">
 								<h3 class="info_customer">THÔNG TIN GIAO HÀNG</h3>
-								<input class="form-control" type="text" name="fullname"
-									value="${sessionScope.user.getFullname()}"
-									placeholder="Họ và tên" required> <input
-									class="form-control" type="text" name="phonenumber"
-									value="${sessionScope.user.getPhonenumber()}"
-									placeholder="Số điện thoại" required> <select
-									name="province" id="province" class="form-control">
-									<option value="-1">Vui lòng chọn tỉnh (thành phố)...</option>
-								</select> <select name="district" id="district" class="form-control">
-									<option value="-1">Vui lòng chọn quận (huyện)...</option>
-								</select> <select name="ward" id="ward" class="form-control">
-									<option value="-1">Vui lòng chọn phường (xã)...</option>
-								</select> <input class="form-control" type="text" name="address"
-									value="${sessionScope.user.getAddress()}"
-									placeholder="Địa chỉ tên đường, (số nhà)" required> <input
-									type="text" name="totalPrice" value="<%=totalPrice%>" hidden />
+
+								<div class="form-group">
+									<label for="fullname">Họ và tên</label> <input
+										class="form-control" type="text" name="fullname"
+										value="${sessionScope.user.getFullname()}"
+										placeholder="Họ và tên" required>
+								</div>
+
+								<div class="form-group">
+									<label for="phonenumber">Số điện thoại</label> <input
+										class="form-control" type="text" name="phonenumber"
+										value="${sessionScope.user.getPhonenumber()}"
+										placeholder="Số điện thoại" required>
+								</div>
+
+								<div class="form-group">
+									<label for="province">Tỉnh (thành phố)</label> <select
+										name="province" id="province" class="form-control">
+										<option value="-1">Vui lòng chọn tỉnh (thành phố)...</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="province">Quận (huyện)</label> <select
+										name="district" id="district" class="form-control">
+										<option value="-1">Vui lòng chọn quận (huyện)...</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="province">Phường (xã)</label> <select name="ward"
+										id="ward" class="form-control">
+										<option value="-1">Vui lòng chọn phường (xã)...</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="province">Địa chỉ</label> <input
+										class="form-control" type="text" name="address"
+										value="${sessionScope.user.getAddress()}"
+										placeholder="Địa chỉ tên đường, (số nhà)" required>
+								</div>
+
+								<div class="form-group">
+									<label for="province">Tổng tiền</label> <input type="text"
+										name="totalPrice" value="<%=totalPrice%>" hidden />
+								</div>
 								<div class="form-control"
 									style="display: flex; align-items: center; justify-content: space-between;">
 									<div style="color: #d2d2d2">
@@ -128,6 +161,12 @@ int totalPrice = priceOrders + Constants.SHIPMENT;
 		</main>
 		<jsp:include page="../components/footer.jsp" />
 	</div>
+	<input type="text" id="provinceCode"
+		value="${sessionScope.user.getProvinceCode()}" hidden />
+	<input type="text" id="districtCode"
+		value="${sessionScope.user.getDistrictCode()}" hidden />
+	<input type="text" id="wardCode"
+		value="${sessionScope.user.getWardCode()}" hidden />
 	<jsp:include page="../components/script.jsp" />
 	<script src="<%=context%>/assets/js/default/checkout.js"></script>
 </body>

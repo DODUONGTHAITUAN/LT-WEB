@@ -54,6 +54,13 @@ public class User implements Serializable {
 
   private String phonenumber;
 
+  @Column(name = "province_code")
+  private int provinceCode;
+  @Column(name = "district_code")
+  private int districtCode;
+  @Column(name = "ward_code")
+  private int wardCode;
+
   // bi-directional many-to-one association to Bill
   @OneToMany(mappedBy = "user")
   private List<Bill> bills;
@@ -64,6 +71,31 @@ public class User implements Serializable {
   private Role role;
 
   public User() {
+  }
+
+  public int getProvinceCode() {
+    return this.provinceCode;
+  }
+
+  public int getDistrictCode() {
+    return this.districtCode;
+  }
+
+  public int getWardCode() {
+    return this.wardCode;
+  }
+
+  public void setProvinceCode(int provinceCode) {
+    this.provinceCode = provinceCode;
+
+  }
+
+  public void setDistrictCode(int districtCode) {
+    this.districtCode = districtCode;
+  }
+
+  public void setWardCode(int wardCode) {
+    this.wardCode = wardCode;
   }
 
   public String getUserId() {
